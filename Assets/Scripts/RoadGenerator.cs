@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class RoadGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject roadPrefab;
+    [SerializeField] private RoadSegment roadPrefab; 
     [SerializeField] private Transform player;
     
     [SerializeField] private int initialCount = 10;
     [SerializeField] private float roadLength = 20f;
     
-    private readonly List<GameObject> _segments = new List<GameObject>();
+    private readonly List<RoadSegment> _segments = new List<RoadSegment>();
 
     private void Start()
     {
@@ -17,6 +17,16 @@ public class RoadGenerator : MonoBehaviour
         {
             var newRoad = Instantiate(roadPrefab);
             newRoad.transform.position = new Vector3(0, 0, i * roadLength);
+            
+            if (i > 1) 
+            {
+                newRoad.RandomizeObstacles();
+            }
+            else
+            {
+                newRoad.RandomizeObstacles(0);
+            }
+
             _segments.Add(newRoad);
         }
     }
@@ -35,6 +45,8 @@ public class RoadGenerator : MonoBehaviour
         
         var lastPosition = _segments[^1].transform.position;
         movingSegment.transform.position = lastPosition + Vector3.forward * roadLength;
+        
+        movingSegment.RandomizeObstacles();
         
         _segments.RemoveAt(0);
         _segments.Add(movingSegment);

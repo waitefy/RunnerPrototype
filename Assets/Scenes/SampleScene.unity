@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  xRange: 5
+  xRange: 4.5
 --- !u!65 &1148373752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7012576f97de3d8b31df98ce992ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roadPrefab: {fileID: 3730935750069482059, guid: 44e5da9c9682fd392941329f5373e9e3, type: 3}
+  roadPrefab: {fileID: 7041378153315700036, guid: 44e5da9c9682fd392941329f5373e9e3, type: 3}
   player: {fileID: 1148373755}
   initialCount: 10
   roadLength: 20
