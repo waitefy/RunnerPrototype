@@ -12,9 +12,10 @@ public class RoadSegment : MonoBehaviour
             obstacle.SetActive(false);
         }
 
+        var activeObstacleCount = 0;
         foreach (var obstacle in obstacles)
         {
-            if (Random.value < chance)
+            if (activeObstacleCount < 2 && Random.value < chance)
             {
                 obstacle.SetActive(true);
                 
@@ -23,6 +24,8 @@ public class RoadSegment : MonoBehaviour
                 
                 var randomScale = Random.Range(0.9f, 1.1f);
                 obstacle.transform.localScale = new Vector3(3, 1, 1) * randomScale; 
+                
+                ++activeObstacleCount;
             }
         }
     }
