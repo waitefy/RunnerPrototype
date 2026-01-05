@@ -19,4 +19,14 @@ public class MoveController : MonoBehaviour
         rawPos.x = Mathf.Clamp(rawPos.x, -xRange, xRange);
         transform.position = rawPos;
     }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Obstacle")) return;
+        Debug.Log("GAME OVER");
+        
+        Time.timeScale = 0; 
+        
+        enabled = false;
+    }
 }
