@@ -4,6 +4,7 @@ public class MoveController : MonoBehaviour
 {
     [SerializeField] private float speed = 10.0f;
     [SerializeField] private float xRange = 5.0f;
+    [SerializeField] private GameObject gameOverPanel;
 
     private void Update()
     {
@@ -23,7 +24,8 @@ public class MoveController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Obstacle")) return;
-        Debug.Log("GAME OVER");
+        
+        gameOverPanel.SetActive(true);
         
         Time.timeScale = 0; 
         
