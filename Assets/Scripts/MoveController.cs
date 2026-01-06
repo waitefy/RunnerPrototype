@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class MoveController : MonoBehaviour
 {
-    [SerializeField] private float speed = 10.0f;
+    [SerializeField] private float speed = 50.0f;
     [SerializeField] private float xRange = 5.0f;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private ParticleSystem explosionPrefab;
 
     private void Update()
     {
@@ -26,10 +27,14 @@ public class MoveController : MonoBehaviour
 
         scoreManager.CheckNewHighScore();
         
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        
+        GetComponent<MeshRenderer>().enabled = false;
+        
         gameOverPanel.SetActive(true);
         
-        Time.timeScale = 0; 
-        
+        Time.timeScale = 0;
+            
         enabled = false;
     }
 }

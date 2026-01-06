@@ -963,10 +963,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c5bece591c79d9484a393b8ec8fdcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 50
   xRange: 4.5
   gameOverPanel: {fileID: 1002559460}
   scoreManager: {fileID: 311431215}
+  explosionPrefab: {fileID: 1984656872573247583, guid: aa716b1d90edec211907f972fc4309d1, type: 3}
 --- !u!65 &1148373752
 BoxCollider:
   m_ObjectHideFlags: 0
