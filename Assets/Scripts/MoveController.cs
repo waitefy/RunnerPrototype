@@ -5,13 +5,12 @@ public class MoveController : MonoBehaviour
     [SerializeField] private float speed = 10.0f;
     [SerializeField] private float xRange = 5.0f;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private ScoreManager scoreManager;
 
     private void Update()
     {
         var x = Input.GetAxis("Horizontal");
-        var z = Input.GetAxis("Vertical");
-        
-        var direction = new Vector3(x, 0, z);
+        var direction = new Vector3(x, 0, 1);
         var step = speed * Time.deltaTime;
         
         transform.Translate(direction * step);
@@ -24,6 +23,8 @@ public class MoveController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Obstacle")) return;
+
+        scoreManager.CheckNewHighScore();
         
         gameOverPanel.SetActive(true);
         
