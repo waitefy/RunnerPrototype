@@ -14,6 +14,8 @@ public class MoveController : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private ParticleSystem explosionPrefab;
+    [SerializeField] private AudioSource crashSound;
+    [SerializeField] private GameObject audioManager;
 
     private void Update()
     {
@@ -38,7 +40,10 @@ public class MoveController : MonoBehaviour
         if (!collision.gameObject.CompareTag("Obstacle")) return;
         scoreManager.CheckNewHighScore();
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        crashSound.Play();
+        audioManager.GetComponent<AudioSource>().Stop();
         GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<TrailRenderer>().emitting = false;
         gameOverPanel.SetActive(true);
         Time.timeScale = 0;
         enabled = false;
