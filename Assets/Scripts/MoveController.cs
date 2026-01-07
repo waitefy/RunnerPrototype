@@ -16,9 +16,12 @@ public class MoveController : MonoBehaviour
     [SerializeField] private ParticleSystem explosionPrefab;
     [SerializeField] private AudioSource crashSound;
     [SerializeField] private GameObject audioManager;
+    [SerializeField] private Animator playerAnim;
 
     private void Update()
     {
+        if (gameOverPanel.activeSelf) return;
+        
         var x = Input.GetAxis("Horizontal");
         var direction = new Vector3(x, 0, 1);
         var step = speed * Time.deltaTime;
@@ -42,10 +45,9 @@ public class MoveController : MonoBehaviour
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         crashSound.Play();
         audioManager.GetComponent<AudioSource>().Stop();
-        GetComponent<MeshRenderer>().enabled = false;
         GetComponent<TrailRenderer>().emitting = false;
+        playerAnim.gameObject.SetActive(false);
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0;
         enabled = false;
     }
 }
