@@ -5,7 +5,7 @@ public class RoadSegment : MonoBehaviour
 {
     [SerializeField] private List<GameObject> obstacles;
 
-    public void RandomizeObstacles(float chance = 0.3f)
+    public void RandomizeObstacles(float chance)
     {
         foreach (var obstacle in obstacles)
         {

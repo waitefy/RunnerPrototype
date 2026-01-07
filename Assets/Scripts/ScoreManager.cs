@@ -9,13 +9,12 @@ public class ScoreManager : MonoBehaviour
     
     private void Update()
     {
-        var score = (int)player.transform.position.z / 10;
-        scoreText.text = score.ToString();
+        scoreText.text = GetScore().ToString();
     }
 
     public void CheckNewHighScore()
     {
-        var score = (int)player.transform.position.z / 10;
+        var score = GetScore();
         var highScore = PlayerPrefs.GetInt("HighScore", 0);
         
         if (score > highScore)
@@ -28,4 +27,9 @@ public class ScoreManager : MonoBehaviour
             highScoreText.text = $"BEST: {highScore}";
         }
     }
+    
+    private int GetScore()
+    {
+        return (int)player.transform.position.z;
+    }   
 }

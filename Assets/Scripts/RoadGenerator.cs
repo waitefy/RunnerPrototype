@@ -3,52 +3,61 @@ using UnityEngine;
 
 public class RoadGenerator : MonoBehaviour
 {
-    [SerializeField] private RoadSegment roadPrefab; 
+    [Header("Settings")]
+    [SerializeField] private List<GameObject> roadPrefabs;
     [SerializeField] private Transform player;
-    
     [SerializeField] private int initialCount = 10;
     [SerializeField] private float roadLength = 20f;
     
-    private readonly List<RoadSegment> _segments = new List<RoadSegment>();
+    private readonly List<GameObject> _segments = new List<GameObject>();
 
     private void Start()
     {
-        for (var i = 0; i < initialCount; ++i)
+        for (var i = 0; i < 2; ++i)
         {
-            var newRoad = Instantiate(roadPrefab);
-            newRoad.transform.position = new Vector3(0, 0, i * roadLength);
-            
-            if (i > 1) 
-            {
-                newRoad.RandomizeObstacles();
-            }
-            else
-            {
-                newRoad.RandomizeObstacles(0);
-            }
-
-            _segments.Add(newRoad);
+            SpawnSegment(i *  roadLength, 0, 0);
+        }
+        for (var i = 2; i < initialCount; ++i)
+        {
+            SpawnSegment(i * roadLength, -1); 
         }
     }
-
+    
     private void Update()
     {
         if (player.position.z > _segments[0].transform.position.z + roadLength)
         {
-            MoveSegment();
+            UpdateRoad();
         }
     }
 
-    private void MoveSegment()
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void SpawnSegment(float zPosition, int prefabIndex = -1, float chance = 0.3f)
     {
-        var movingSegment = _segments[0];
+        if (prefabIndex == -1)
+        {
+            prefabIndex = Random.Range(0, roadPrefabs.Count);
+        }
         
-        var lastPosition = _segments[^1].transform.position;
-        movingSegment.transform.position = lastPosition + Vector3.forward * roadLength;
+        var newRoad = Instantiate(roadPrefabs[prefabIndex], transform);
+        newRoad.transform.position = Vector3.forward * zPosition;
         
-        movingSegment.RandomizeObstacles();
-        
+        var segmentScript = newRoad.GetComponent<RoadSegment>();
+        if (segmentScript != null)
+        {
+            segmentScript.RandomizeObstacles(chance);
+        }
+
+        _segments.Add(newRoad);
+    }
+
+    private void UpdateRoad()
+    {
+        var oldSegment = _segments[0];
         _segments.RemoveAt(0);
-        _segments.Add(movingSegment);
+        Destroy(oldSegment);
+        
+        var newZ = _segments[^1].transform.position.z + roadLength;
+        SpawnSegment(newZ);
     }
 }
