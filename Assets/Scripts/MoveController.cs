@@ -4,7 +4,7 @@ public class MoveController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float speed = 10.0f;
-    [SerializeField] private float maxSpeed = 40.0f;
+    [SerializeField] private float maxSpeed = 30.0f;
     [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private float xRange = 5.0f;
     
