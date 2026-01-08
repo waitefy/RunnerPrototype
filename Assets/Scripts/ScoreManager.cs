@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.SetText("Score: {0}", _score);
+            scoreText.SetText("{0}", _score);
         }
     }
 

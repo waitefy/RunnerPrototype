@@ -3,12 +3,14 @@ using UnityEngine;
 public class MoveController : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float speed = 50.0f;
+    [SerializeField] private float speed = 10.0f;
+    [SerializeField] private float maxSpeed = 40.0f;
+    [SerializeField] private float acceleration = 0.2f;
     [SerializeField] private float xRange = 5.0f;
     
     [Header("Juice")]
-    [SerializeField] private float tiltAngle = 30.0f; // Максимальный угол наклона
-    [SerializeField] private float tiltSpeed = 10.0f; // Скорость наклона
+    [SerializeField] private float tiltAngle = 30.0f;
+    [SerializeField] private float tiltSpeed = 10.0f;
     
     [Header("References")]
     [SerializeField] private GameObject gameOverPanel;
@@ -21,6 +23,11 @@ public class MoveController : MonoBehaviour
     private void Update()
     {
         if (gameOverPanel.activeSelf) return;
+        
+        if (speed < maxSpeed)
+        {
+            speed += acceleration * Time.deltaTime;
+        }
         
         var x = Input.GetAxis("Horizontal");
         var direction = new Vector3(x, 0, 1);
