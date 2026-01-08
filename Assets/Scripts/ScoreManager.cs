@@ -1,35 +1,43 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text highScoreText;
-    
-    private void Update()
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
+    private int _score;
+
+    private void Start()
     {
-        scoreText.text = GetScore().ToString();
+        UpdateScoreText();
+    }
+
+    public void AddScore(int amount)
+    {
+        _score += amount;
+        UpdateScoreText();
+    }
+
+    private void UpdateScoreText()
+    {
+        if (scoreText != null)
+        {
+            scoreText.SetText("Score: {0}", _score);
+        }
     }
 
     public void CheckNewHighScore()
     {
-        var score = GetScore();
         var highScore = PlayerPrefs.GetInt("HighScore", 0);
         
-        if (score > highScore)
+        if (_score > highScore)
         {
-            PlayerPrefs.SetInt("HighScore", score);
-            highScoreText.text = $"NEW BEST: {score}";
+            PlayerPrefs.SetInt("HighScore", _score);
+            highScoreText.SetText("NEW BEST: {0}", _score);
         }
         else
         {
-            highScoreText.text = $"BEST: {highScore}";
+            highScoreText.SetText("BEST: {0}", highScore);
         }
     }
-    
-    private int GetScore()
-    {
-        return (int)player.transform.position.z;
-    }   
 }
